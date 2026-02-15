@@ -1,5 +1,5 @@
 --!nocheck
-local _Config = {
+local _Config = { --// Example config
 	Targets = { --// One or more target(s), write usernames in quotations (ex: { "newandreformedlyth", "PS2_Ports" })
 		"newandreformedlyth"
 	},
@@ -113,9 +113,17 @@ local Modules = {
 
 		local fishing = require(ReplicatedStorage.shared.modules.fishing)
 
+		local exclusionList = {
+			"Amygdala",
+			"Debug Rod",
+			"Hubert Rod",
+			"Illumina",
+		}
+
 		for name, data in library.rods do
 			if typeof(name) ~= "string" or typeof(data) ~= "table" then continue end
 			if level == 1 and data.Unregistered then continue end
+			if table.find(exclusionList, name) then continue end
 
 			fishing:GiveRodItem(player, name, true)
 		end
